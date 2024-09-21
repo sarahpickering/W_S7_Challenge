@@ -49,10 +49,46 @@ describe('Sprint 7 Challenge Learner Tests', () => {
     [5] renders a text that reads "JavaScript is pretty awesome"
     [6] renders a text that includes "javaScript is pretty" (use exact = false)
   */
-  test('you can comment out this test', () => {
-    expect(true).toBe(false)
-  })
+//   test('you can comment out this test', () => {
+//     expect(true).toBe(false)
+//   })
+// })
+
+beforeEach(() => {
+  render(<HelloWorld />)
 })
+  test('renders a link that reads "Home"', () => {
+    const homeLink = screen.queryByText("Home")
+    expect(homeLink).toBeInTheDocument()
+  })
+
+  test('renders a link that reads "About"', () => {
+    const aboutLink = screen.queryByText("About")
+    expect(aboutLink).toBeInTheDocument()
+  })
+
+  test('renders a link that reads "Blog"', () => {
+    const blogLink = screen.queryByText("Blog")
+    expect(blogLink).toBeInTheDocument()
+  })
+
+  test('renders a text that reads "The Truth"', () => {
+    const truthText = screen.queryByText("The Truth")
+    expect(truthLink).toBeInTheDocument()
+  })
+
+  test('renders a text that reads "JavaScript is pretty awesome', () => {
+    const javaScriptText = screen.queryByText("JavaScript is pretty awesome")
+    expect(javaScriptText).toBeInTheDocument()
+  })
+
+  test('renders a link that reads "javaScript is pretty', () => {
+    const partialText = screen.queryByText(/javascript is pretty/i, {exact: false})
+    expect(partialText).toBeInTheDocument()
+  });
+
+})
+
 
 function sum(a, b) {
   a = Number(a)
