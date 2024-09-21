@@ -73,7 +73,7 @@ beforeEach(() => {
   })
 
   test('renders a text that reads "The Truth"', () => {
-    const truthText = screen.queryByText("The Truth")
+    const truthLink = screen.queryByText("The Truth")
     expect(truthLink).toBeInTheDocument()
   })
 
