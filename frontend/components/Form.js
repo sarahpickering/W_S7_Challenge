@@ -96,30 +96,32 @@ const onSubmit = (evt) => {
         <div>
           <label htmlFor="fullName">Full Name</label>
           <br />
-          <input placeholder="Type full name" id="fullName" type="text" />
+          <input placeholder="Type full name" id="fullName" type="text" value={values.fullName} onChange={handleChange}/>
         </div>
-        {true && <div className="error">Bad value</div>}
+        {errors.fullName && <div className="error">{errors.FullName}</div>}
       </div>
 
       <div className="input-group">
         <div>
           <label htmlFor="size">Size</label>
           <br />
-          <select id="size">
+          <select id="size" value={values.size} onChange={handleChange}>
             <option value="">----Choose Size----</option>
             <option value="S">Small</option>
             <option value="M">Medium</option>
             <option value="L">Large</option>
           </select>
         </div>
-        {true && <div className="error">Bad value</div>}
+        {true && <div className="error">{errors.size}</div>}
       </div>
 
       <div className="input-group">
         {toppings.map(({ topping_id, text }) => (
           <label key={topping_id}>
             <input name={topping_id} 
-            type="checkbox" />
+            type="checkbox" 
+            onChange={handleToppings}
+            checked={!!values.toppings.find(t => t == topping_id)}/>
             { text }
             <br />
           </label>
@@ -127,7 +129,7 @@ const onSubmit = (evt) => {
 
       </div>
       {/* 👇 Make sure the submit stays disabled until the form validates! */}
-      <input type="submit" />
+      <input type="submit" disabled ={!enabled}/>
     </form>
   );
 }
