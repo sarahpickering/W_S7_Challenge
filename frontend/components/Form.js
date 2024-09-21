@@ -87,7 +87,7 @@ const onSubmit = (evt) => {
 }
 
   return (
-    <form>
+    <form onSubmit={onSubmit}>
       <h2>Order Your Pizza</h2>
       {serverSuccess && <div className="success">{serverSuccess}</div>}
       {serverFailure && <div className="failure">{serverFailure}</div>}
@@ -98,7 +98,7 @@ const onSubmit = (evt) => {
           <br />
           <input placeholder="Type full name" id="fullName" type="text" value={values.fullName} onChange={handleChange}/>
         </div>
-        {errors.fullName && <div className="error">{errors.FullName}</div>}
+        {errors.fullName && <div className="error">{errors.fullName}</div>}
       </div>
 
       <div className="input-group">
