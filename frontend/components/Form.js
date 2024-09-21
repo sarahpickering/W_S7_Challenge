@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import * as yup from 'yup'
 import axios from 'axios'
 
+
 // 👇 Here are the validation errors you will use with Yup.
 const validationErrors = {
   fullNameTooShort: 'full name must be at least 3 characters',
@@ -39,6 +40,51 @@ const [serverFailure, setServerFailure] = useState('')
 const [enabled, setEnabled] = useState(false)
 const [errors, setErrors] = useState({fullName: '', size: '' })
 const [values, setValues] = useState(initialValues)
+
+useEffect(() => {
+  validationSchema.isValid(values).then((isValid) => {
+    setEnabled(isValid)
+  })
+}, [values.fullName, values.size])
+
+const validate =(key, value) => {
+  yup
+  .reach(validationSchema, key)
+  .validate(value)
+  .then(() => {
+    setErrors({...errors, [key]: ""})
+  })
+  .catch((error) => {
+    setErrors({...errors, [key]: error.errors[0]})
+  })
+}
+
+const handleChange = (evt) => {
+  const {id, value} = evt.target
+  validate(id, value)
+  setValues({...values, [id] : value})
+
+}
+
+const handleToppings = (evt) => {
+  const { name, checked } = evt.target
+  if (checked) setValues({...values, toppings: [...values.toppings, name]})
+    else setValues ({...values, toppings: values.toppings.filter(t => t !=name)})
+}
+
+const onSubmit = (evt) => {
+  evt.preventDefault()
+  axios.post("http://localhost:9009/api/order", values)
+  .then(res => {
+    setValues(initialValues)
+    setServerSuccess(res.data.message)
+    setServerFailure('')
+  })
+  .catch(err => {
+    setServerSuccess('')
+    setServerFailure(err?.response?.data?.message)
+  })
+}
 
   return (
     <form>
